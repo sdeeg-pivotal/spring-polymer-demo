@@ -1,0 +1,11 @@
+---
+applications:
+- name: polymer-smd
+  memory: 512M
+  host: polymer-smd
+  domain: cfapps.io
+  path: target/polymer-0.0.1-SNAPSHOT.jar
+  env:
+    message: hello, world
+    debug: 'true'
+  services: [ session-server ]

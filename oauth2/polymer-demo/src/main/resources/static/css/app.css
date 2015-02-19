@@ -1,0 +1,15 @@
+body {
+  font-family: sans-serif;
+}
+core-header-panel {
+  background: white;
+}
+core-toolbar {
+  background-color: #6db33f;
+}
+p.bubble {
+  margin: 20px;
+  padding: 80px 20px;
+  border-radius: 20px;
+  background-color: #f1f1f1;
+}

@@ -1,0 +1,11 @@
+server:
+  port: 9000
+security:
+  basic:
+    enabled: false
+  sessions: NEVER
+  user:
+    password: password
+logging:
+  level:
+    org: WARN

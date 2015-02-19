@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- 1. Load platform support before any code that touches the DOM. -->
+    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+
+	<link rel="import" href="bower_components/core-elements/core-elements.html">
+	<link rel="import" href="bower_components/core-ajax/core-ajax.html">
+    <link rel="import" href="bower_components/paper-elements/paper-elements.html">
+	<link rel="import" href="elements/app-elements.html">
+
+    <link href="css/app.css" rel="stylesheet">
+</head>
+<body fullbleed vertical layout unresolved>
+
+<template is="auto-binding">
+<core-ajax id="userEndpoint" 
+           url="/user" 
+           handleAs="json" 
+           response="{{user}}" 
+           on-core-response="{{userResponse}}" 
+           on-core-error="{{userError}}"></core-ajax>
+<paper-toast id="userErrorToast" text="There was an error when trying to load the user."></paper-toast>
+
+<core-header-panel flex>
+  <core-toolbar>
+  Polymer / Spring Demo
+  <span flex></span>
+  {{user.name}}
+  </core-toolbar>
+  <div class="content">
+    <core-pages id="pageSelector" selected="0">
+	<div>
+		<p class="bubble"></p>
+	</div>
+	<div>
+		<p class="bubble">
+			<b>Login to see your greeting</b><br>
+			<login-element id="loginElement" loginCallback="{{checkUserEndpoint}}"></login-element>
+		</p>
+	</div>
+	<div>
+		<p class="bubble">
+		   <home-element id="homeElement"></home-element><br>
+		   <logout-element id="logoutElement" logoutCallback="{{checkUserEndpoint}}"></logout-element>
+		</p>
+	</div>
+    </core-pages>
+  </div>
+</core-header-panel>
+</template>
+<script src="js/app.js"></script>
+</body>
+</html>

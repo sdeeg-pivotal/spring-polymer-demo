@@ -1,0 +1,154 @@
+<link rel="import" href="../bower_components/polymer/polymer.html"></link>
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+
+<polymer-element name="home-element" attributes="resourceURI tokenURI">
+<template>
+<core-ajax id="getAuthToken"
+           url="{{token}}"
+	       handleAs="json" 
+	       response="{{authToken}}"
+	       on-core-response="{{authResponse}}"></core-ajax>
+<core-ajax id="resourceEndpoint" 
+           url="{{resourceURI}}"
+	       handleAs="json" 
+	       response="{{greeting}}"></core-ajax>
+<div>
+	<h1>Greeting</h1>
+	<p>The ID is {{greeting.id}}</p>
+	<p>The content is {{greeting.content}}</p>
+</div>
+</template>
+<script>
+    Polymer({
+        auth: {
+      	  "X-Auth-Token" : ""
+        },
+        authToken: { token: "DummyToken" },
+      greeting: {
+    	id: "123",
+    	content: "default"
+      },
+      resourceURI: "/resource",
+      tokenURI: "/token",
+      authResponse: function() {
+    	  this.auth = { "X-Auth-Token" : this.authToken.token };
+          this.$.resourceEndpoint.headers = JSON.stringify(this.auth);
+        	this.$.resourceEndpoint.go();
+      },
+      update: function() {
+      	this.$.getAuthToken.go();
+      }
+    });
+</script>
+</polymer-element>
+
+<polymer-element name="login-element" attributes="loginCallback loginURI">
+<template>
+<core-ajax id="loginEndpoint" url="{{loginURI}}"
+	handleAs="json" method="POST" on-core-response="{{loginResponse}}"
+	on-core-error="{{loginError}}"></core-ajax>
+<paper-toast
+	id="errorToast" text="Service Error!"></paper-toast> <paper-toast
+	id="authErrorToast" text="Error: User is not authenticated!"></paper-toast>
+
+<div>
+  <table>
+  <tr>
+  <td>User Name:</td><td><paper-input label="User Name" value="{{credentials.username}}"></paper-input></td>
+  </tr>
+  <tr>
+  <td>Password:</td><td><paper-input label="Password" value="{{credentials.password}}"></paper-input></td>
+  </tr>
+  <tr><td colspan="2"><paper-button raised on-click='{{login}}'>Login</paper-button></td></tr>
+  </table>
+</div>
+</template>
+<script>
+    Polymer({
+      credentials: {
+    	username: "user",
+    	password: "password"
+      },
+      csrf: {
+    	  "X-CSRF-TOKEN" : "DummyToken"
+      },
+      loginURI: "/login",
+      loginCallback: function() {},
+      ready: function() {
+      },
+      login: function() {
+          this.$.loginEndpoint.headers = this.getHeader();
+      	  this.$.loginEndpoint.params = JSON.stringify(this.credentials);
+     	  this.$.loginEndpoint.go();
+      },
+      loginResponse: function() {
+    	  this.loginCallback();
+      },
+      loginError: function() {
+    	  this.$.errorToast.text="Login Service Error";
+    	  this.$.errorToast.show();
+      },
+      getHeader: function() {
+      	  //Get the X-CSRF-TOKEN and set it in the header for the login POST
+     	  var name = "X-CSRF-TOKEN=";
+      	  var newToken = "NewToken";
+     	  var ca = document.cookie.split(';');
+     	  for(var i=0; i<ca.length; i++) {
+     	      var c = ca[i];
+     	      while (c.charAt(0)==' ') c = c.substring(1);
+     	      if (c.indexOf(name) == 0) { newToken = c.substring(name.length,c.length); }
+     	  }
+          this.csrf = { "X-CSRF-TOKEN" : newToken };
+          return JSON.stringify(this.csrf);
+      }
+  });
+</script>
+</polymer-element>
+
+<polymer-element name="logout-element" attributes="logoutCallback logoutURI">
+<template>
+<core-ajax id="logoutEndpoint" url="{{logoutURI}}"
+	handleAs="json" method="POST" on-core-response="{{logoutResponse}}"
+	on-core-error="{{logoutError}}"></core-ajax>
+	
+	<paper-toast id="errorToast" text="Service Error!"></paper-toast>
+
+<div>
+	<paper-button raised on-click='{{logout}}'>Logout</paper-button>
+</div>
+</template>
+<script>
+    Polymer({
+        csrf: {
+      	  "X-CSRF-TOKEN" : "DummyToken"
+        },
+        ready: function() {
+        },
+      logoutURI: "/logout",
+      logoutCallback: function() {},
+      logout: function() {
+      	//Get the X-CSRF-TOKEN and set it in the header for the login POST
+     	    var name = "X-CSRF-TOKEN=";
+      	var newToken = "NewToken";
+     	    var ca = document.cookie.split(';');
+     	    for(var i=0; i<ca.length; i++) {
+     	        var c = ca[i];
+     	        while (c.charAt(0)==' ') c = c.substring(1);
+     	        if (c.indexOf(name) == 0) { newToken = c.substring(name.length,c.length); }
+     	    }
+          this.csrf = { "X-CSRF-TOKEN" : newToken };
+          this.$.logoutEndpoint.headers = JSON.stringify(this.csrf);
+     	 this.$.logoutEndpoint.go();
+      },
+      logoutResponse: function() {
+    	  this.logoutCallback();
+      },
+      loginError: function() {
+    	  this.$.errorToast.text="Logout Service Error";
+    	  this.$.errorToast.show();
+      }
+  });
+</script>
+</polymer-element>
