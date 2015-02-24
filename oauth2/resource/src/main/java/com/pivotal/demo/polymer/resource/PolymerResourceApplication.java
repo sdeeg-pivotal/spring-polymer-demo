@@ -9,10 +9,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @SpringBootApplication
-public class PolymerResourceApplication extends WebSecurityConfigurerAdapter implements CommandLineRunner {
+public class PolymerResourceApplication implements CommandLineRunner {
     private static final Logger log = Logger.getLogger(PolymerResourceApplication.class);
 
     @Value("${bean.dump:false}")

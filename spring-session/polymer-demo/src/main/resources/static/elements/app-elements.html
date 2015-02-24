@@ -6,12 +6,12 @@
 <polymer-element name="home-element">
 <template>
 <core-ajax id="getAuthToken"
-           url="/token"
+           url="/uaa/token"
 	       handleAs="json" 
 	       response="{{authToken}}"
 	       on-core-response="{{authResponse}}"></core-ajax>
 <core-ajax id="resourceEndpoint" 
-           url="/resource"
+           url="/api/resource"
 	       handleAs="json" 
 	       response="{{greeting}}"></core-ajax>
 <div>
@@ -33,7 +33,7 @@
       authResponse: function() {
     	  this.auth = { "X-Auth-Token" : this.authToken.token };
           this.$.resourceEndpoint.headers = JSON.stringify(this.auth);
-        	this.$.resourceEndpoint.go();
+          this.$.resourceEndpoint.go();
       },
       update: function() {
       	this.$.getAuthToken.go();
@@ -47,9 +47,8 @@
 <core-ajax id="loginEndpoint" url="/login"
 	handleAs="json" method="POST" on-core-response="{{loginResponse}}"
 	on-core-error="{{loginError}}"></core-ajax>
-<paper-toast
-	id="errorToast" text="Service Error!"></paper-toast> <paper-toast
-	id="authErrorToast" text="Error: User is not authenticated!"></paper-toast>
+<paper-toast id="errorToast" text="Service Error!"></paper-toast>
+<paper-toast id="authErrorToast" text="Error: User is not authenticated!"></paper-toast>
 
 <div>
   <table>
@@ -126,17 +125,17 @@
       logoutCallback: function() {},
       logout: function() {
       	//Get the X-CSRF-TOKEN and set it in the header for the login POST
-     	    var name = "X-CSRF-TOKEN=";
-      	var newToken = "NewToken";
-     	    var ca = document.cookie.split(';');
-     	    for(var i=0; i<ca.length; i++) {
-     	        var c = ca[i];
-     	        while (c.charAt(0)==' ') c = c.substring(1);
-     	        if (c.indexOf(name) == 0) { newToken = c.substring(name.length,c.length); }
-     	    }
+          var name = "X-CSRF-TOKEN=";
+      	  var newToken = "NewToken";
+     	  var ca = document.cookie.split(';');
+     	  for(var i=0; i<ca.length; i++) {
+     	      var c = ca[i];
+     	      while (c.charAt(0)==' ') c = c.substring(1);
+     	      if (c.indexOf(name) == 0) { newToken = c.substring(name.length,c.length); }
+     	  }
           this.csrf = { "X-CSRF-TOKEN" : newToken };
           this.$.logoutEndpoint.headers = JSON.stringify(this.csrf);
-     	 this.$.logoutEndpoint.go();
+     	  this.$.logoutEndpoint.go();
       },
       logoutResponse: function() {
     	  this.logoutCallback();

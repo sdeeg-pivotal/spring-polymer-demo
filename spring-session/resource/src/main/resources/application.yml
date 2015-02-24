@@ -1,5 +1,6 @@
 server:
   port: 9000
+  context: /api
 security:
   basic:
     enabled: false

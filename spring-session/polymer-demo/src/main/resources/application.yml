@@ -4,8 +4,8 @@ security:
 zuul:
   routes:
     resource:
-      path: /resource/**
-      url: http://localhost:9000/resource
+      path: /api/resource/**
+      url: http://localhost:9000/api/resource
 logging:
   level:
     org: WARN
