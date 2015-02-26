@@ -6,11 +6,12 @@
 	<artifactId>spring-polymer-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Polymer and Java/Spring App</name>
+	<name>Demo app using Polymer with 1) Spring Session and OAuth2 Security and 2) Spring Cloud</name>
 
 	<modules>
-		<module>spring-session</module>
-		<module>oauth2</module>
+		<module>polymer-ui</module>
+		<module>resource</module>
+		<module>auth-server</module>
 	</modules>
 	
 </project>

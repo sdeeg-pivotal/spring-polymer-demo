@@ -1,0 +1,5 @@
+zuul:
+  routes:
+    resource:
+      path: /api/resource/**
+      url: http://localhost:9000/api/resource

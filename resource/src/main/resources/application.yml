@@ -1,0 +1,12 @@
+server:
+  port: 9000
+  contextPath: /api
+security:
+  basic:
+    enabled: false
+  sessions: NEVER
+  user:
+    password: password
+logging:
+  level:
+    org: WARN

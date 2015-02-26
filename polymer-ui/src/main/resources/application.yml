@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: session
+server:
+  port: 9080
+security:
+  user:
+    password: password
+logging:
+  level:
+    org: WARN
+#    org.springframework.security: DEBUG
+#    org.springframework.web: DEBUG
