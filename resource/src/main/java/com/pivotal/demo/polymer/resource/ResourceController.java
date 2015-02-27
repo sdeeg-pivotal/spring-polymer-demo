@@ -14,7 +14,7 @@ public class ResourceController {
 	  public Map<String,Object> home() {
 	    Map<String,Object> model = new HashMap<String,Object>();
 	    model.put("id", UUID.randomUUID().toString());
-	    model.put("content", "hello, world");
+	    model.put("content", "hello, authenticated user");
 	    return model;
 	  }
 }

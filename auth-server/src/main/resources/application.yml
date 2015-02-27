@@ -1,6 +1,7 @@
 #debug:
-bean:
-  dump: false
+spring:
+  profiles:
+    active: bean-dump
 
 server:
   port: 9999

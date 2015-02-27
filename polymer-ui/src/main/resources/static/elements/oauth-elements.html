@@ -1,0 +1,48 @@
+
+<polymer-element name="oauth-login">
+	<template>
+	<div class="container">
+		<form role="form" action="login" method="post">
+		  <div class="form-group">
+		    <label for="username">Username:</label>
+		    <input type="text" class="form-control" id="username" name="username"/>
+		  </div>
+		  <div class="form-group">
+		    <label for="password">Password:</label>
+		    <input type="password" class="form-control" id="password" name="password"/>
+		  </div>
+		  <input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		  <button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+	</template>
+	<script>
+	</script>
+</polymer-element>
+
+<polymer-element name="oauth-authorize">
+	<template>
+	<div class="container">
+		<h2>Please Confirm</h2>
+
+		<p>
+			Do you authorize "${authorizationRequest.clientId}" at "${authorizationRequest.redirectUri}" to access your protected resources
+			with scope ${authorizationRequest.scope?join(", ")}.
+		</p>
+		<form id="confirmationForm" name="confirmationForm"
+			action="../oauth/authorize" method="post">
+			<input name="user_oauth_approval" value="true" type="hidden" />
+			<input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			<button class="btn btn-primary" type="submit">Approve</button>
+		</form>
+		<form id="denyForm" name="confirmationForm"
+			action="../oauth/authorize" method="post">
+			<input name="user_oauth_approval" value="false" type="hidden" />
+			<input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			<button class="btn btn-primary" type="submit">Deny</button>
+		</form>
+	</div>
+	</template>
+	<script>
+	</script>
+</polymer-element>

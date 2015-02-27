@@ -25,6 +25,7 @@
         auth: {
       	  "X-Auth-Token" : ""
         },
+        oauth: true,
         authToken: { token: "DummyToken" },
       greeting: {
     	id: "123",
@@ -36,7 +37,12 @@
           this.$.resourceEndpoint.go();
       },
       update: function() {
-      	this.$.getAuthToken.go();
+      	if(this.oauth) {
+            this.$.resourceEndpoint.go();
+      	}
+      	else {
+      		this.$.getAuthToken.go();
+      	}
       }
     });
 </script>

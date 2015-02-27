@@ -1,11 +1,20 @@
 zuul:
   routes:
     resource:
-      path: /resource/**
-      url: http://localhost:9090/api/resource
-    user:
-      path: /user/**
-      url: http://localhost:9999/uaa/user
+      path: /api/resource/**
+      url: http://localhost:9000/api/resource/
+    uaa:
+      path: /uaa/**
+      url: http://localhost:9999/uaa/
+#    user:
+#      path: /uaa/user
+#      url: http://localhost:9999/uaa/user
+#    token:
+#      path: /uaa/token/*
+#      url: http://localhost:9999/uaa/oauth/token
+#    oauth:
+#      path: /uaa/oauth/**
+#      url: http://localhost:9999/uaa/oauth/**
 
 spring:
   oauth2:
