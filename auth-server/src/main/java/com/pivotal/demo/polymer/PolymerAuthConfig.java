@@ -26,8 +26,8 @@ public class PolymerAuthConfig {
       @Override
       public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-               .withClient("acme")
-               .secret("acmesecret")
+               .withClient("polymer-ui-server")
+               .secret("polymer-ui-secret")
                .authorizedGrantTypes("authorization_code", "refresh_token", "password")
                .scopes("openid");
       }

@@ -1,0 +1,1 @@
+Simple service that returns JSON data.

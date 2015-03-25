@@ -2,14 +2,28 @@ body {
   font-family: sans-serif;
 }
 core-header-panel {
-  background: white;
+  background: #f1f1f1;
 }
 core-toolbar {
-  background-color: #03A9F4;
+  background-color: #34302d;
+  color: white;
 }
+
+/* title bar of the right panel */
+core-scaffold::shadow core-toolbar {
+	background: #6db33f;
+	color: #34302d;
+}
+/* content of the right panel */
+core-scaffold::shadow core-header-panel {
+	background: white;
+	color: black;
+}
+
 p.bubble {
   margin: 20px;
   padding: 80px 20px;
   border-radius: 20px;
-  background-color: #eee;
+  background-color: #f1f1f1;
+  color: #34302d;
 }

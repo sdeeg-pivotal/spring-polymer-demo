@@ -1,20 +1,11 @@
 zuul:
   routes:
     resource:
-      path: /api/resource/**
+      path: /resource/**
       url: http://localhost:9000/api/resource/
     uaa:
       path: /uaa/**
       url: http://localhost:9999/uaa/
-#    user:
-#      path: /uaa/user
-#      url: http://localhost:9999/uaa/user
-#    token:
-#      path: /uaa/token/*
-#      url: http://localhost:9999/uaa/oauth/token
-#    oauth:
-#      path: /uaa/oauth/**
-#      url: http://localhost:9999/uaa/oauth/**
 
 spring:
   oauth2:
@@ -25,7 +16,7 @@ spring:
     client:
       accessTokenUri: http://localhost:9999/uaa/oauth/token
       userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize
-      clientId: acme
-      clientSecret: acmesecret
+      clientId: polymer-ui-server
+      clientSecret: polymer-ui-secret
     resource:
       userInfoUri: http://localhost:9999/uaa/user

@@ -21,6 +21,12 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
+/*
+ * OAuth support is currently not fully baked.  It has worked at points, but I believe
+ * is currently broken.
+ * 
+ * TODO:  Fix OAuth
+ */
 @Profile("oauth")
 @Configuration
 @EnableOAuth2Sso

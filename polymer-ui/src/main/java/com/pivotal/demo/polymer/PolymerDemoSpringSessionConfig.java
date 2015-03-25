@@ -33,21 +33,20 @@ public class PolymerDemoSpringSessionConfig {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.formLogin().and().logout().and().authorizeRequests()
-					.antMatchers("/index.html", "/home.html", "/login.html", "/", "bower_components/**", "elements/*").permitAll().anyRequest()
+		http.formLogin().and().logout().and().authorizeRequests()
+					.antMatchers("/", "/index.html", "/bower_components/**", "/elements/*", "/login", "/logout", "/uaa/token").permitAll().anyRequest()
 					.authenticated().and().csrf()
 					.csrfTokenRepository(csrfTokenRepository()).and()
 					.addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
 		}
-
+		
 		private Filter csrfHeaderFilter() {
 			return new OncePerRequestFilter() {
 				@Override
 				protected void doFilterInternal(HttpServletRequest request,
 						HttpServletResponse response, FilterChain filterChain)
 						throws ServletException, IOException {
-					CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class
-							.getName());
+					CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
 					if (csrf != null) {
 						Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
 						String token = csrf.getToken();
@@ -68,6 +67,5 @@ public class PolymerDemoSpringSessionConfig {
 			repository.setHeaderName("X-XSRF-TOKEN");
 			return repository;
 		}
-		
 	}
 }

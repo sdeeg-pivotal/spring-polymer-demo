@@ -1,0 +1,11 @@
+---
+applications:
+- name: polymer-demo-resource
+  memory: 512M
+  host: polymer-demo-resource
+  domain: cfapps.io
+  path: target/polymer-demo-resource-0.0.1-SNAPSHOT.jar
+  env:
+    SPRING_PROFILES_ACTIVE: session
+  services:
+  - session-server

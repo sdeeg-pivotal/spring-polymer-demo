@@ -1,0 +1,1 @@
+Application to host a SPA application based on Google Polymer.  Also provides a Service Proxy using Zuul.

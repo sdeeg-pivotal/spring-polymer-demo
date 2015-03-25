@@ -1,0 +1,12 @@
+---
+applications:
+- name: polymer-demo-ui
+  memory: 512M
+  host: polymer-demo-ui
+  domain: cfapps.io
+  path: target/polymer-demo-ui-0.0.1-SNAPSHOT.jar
+  env:
+    SPRING_PROFILES_ACTIVE: session
+    ZUUL_ROUTES_RESOURCE_URL: http://polymer-demo-resource.cfapps.io/api/resource
+  services:
+  - session-server

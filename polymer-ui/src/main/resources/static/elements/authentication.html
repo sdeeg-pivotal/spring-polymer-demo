@@ -1,0 +1,58 @@
+<link rel="import" href="../js/bower_components/polymer/polymer.html"></link>
+<link rel="import" href="../js/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../js/bower_components/core-icons/core-icons.html">
+<link rel="import" href="../js/bower_components/paper-elements/paper-elements.html">
+
+<!-- Element to manage user authentication/authorization/token gathering -->
+<polymer-element name="authentication-validator" attributes="user csrfHeader">
+<template>
+<core-ajax id="userEndpoint" 
+           url="/uaa/user" 
+           headers="{{csrfHeader}}"
+           handleAs="json" 
+           response="{{user}}" 
+           on-core-response="{{userResponse}}" 
+           on-core-error="{{userError}}"></core-ajax>
+<paper-toast id="userErrorToast" text="There was an error when trying to load the user data"></paper-toast>
+</template>
+<script>
+    Polymer({
+        created: function() {
+            this.user = { name: "" };
+            this.csrfToken = "DummyToken";
+            this.csrfHeader = "";
+        },
+        validate: function() {
+            this.setCSRFToken();
+        	this.$.userEndpoint.go();
+        },
+        reset: function() {
+        	this.csrfToken = "DummyToken";
+            this.setCSRFToken();
+        },
+    	setCSRFToken: function() {
+       	    var name = "XSRF-TOKEN=";
+     	    var ca = document.cookie.split(';');
+     	    for(var i=0; i<ca.length; i++) {
+     	        var c = ca[i];
+     	        while (c.charAt(0)==' ') c = c.substring(1);
+     	        if (c.indexOf(name) == 0) { this.csrfToken = c.substring(name.length,c.length); }
+     	    }
+            this.$.csrfHeader = JSON.stringify({"X-XSRF-Token" : this.csrfToken});
+            this.$.userEndpoint.headers = this.$.csrfHeader;
+    	},
+        userResponse: function(){
+    		if(this.user.name) {
+    			this.fire('authenticated', { authenticated: true });
+    		}
+    		else
+    		{
+    			this.fire('authenticated', { authenticated: false });
+    		}
+        },
+        userError: function() {
+        	this.$.userErrorToast.show();
+        }
+    });
+</script>
+</polymer-element>

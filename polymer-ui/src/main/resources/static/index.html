@@ -2,25 +2,23 @@
 <html>
   <head>
     <!-- 1. Load platform support before any code that touches the DOM. -->
-    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <script src="js/bower_components/webcomponentsjs/webcomponents.min.js"></script>
 
-	<link rel="import" href="bower_components/core-elements/core-elements.html">
-	<link rel="import" href="bower_components/core-ajax/core-ajax.html">
-    <link rel="import" href="bower_components/paper-elements/paper-elements.html">
+	<link rel="import" href="js/bower_components/core-elements/core-elements.html">
+
+    <!-- Custom Elements -->
 	<link rel="import" href="elements/app-elements.html">
+	<link rel="import" href="elements/authentication.html">
+	<link rel="import" href="elements/login-elements.html">
 
     <link href="css/app.css" rel="stylesheet">
 </head>
+
 <body fullbleed vertical layout unresolved>
 
 <template is="auto-binding" id="main-template">
-<core-ajax id="userEndpoint" 
-           url="/uaa/user" 
-           handleAs="json" 
-           response="{{user}}" 
-           on-core-response="{{userResponse}}" 
-           on-core-error="{{userError}}"></core-ajax>
-<paper-toast id="userErrorToast" text="There was an error when trying to load the user."></paper-toast>
+<!-- Non-UI element to validate if the user is already logged in, and get user data. -->
+<authentication-validator id="authValidator" user="{{user}}" csrfHeader="{{csrfHeader}}"></authentication-validator>
 
 <core-scaffold>
   <core-header-panel navigation flex mode="seamed">
@@ -30,30 +28,25 @@
       <core-item main-display="main" icon="settings" label="Main"></core-item>
     </core-menu>
   </core-header-panel>
-  <div tool>
-    <span flex>Polymer / Spring Demo</span>
-    <span>{{user.name}}</span>
+  <div tool horizontal layout justified flex>
+	  <span flex>Polymer / Spring Demo</span>
+	  <span>{{user.name}}</span>
+	  <span><logout-element id="logoutElement" csrfHeader="{{csrfHeader}}" hidden></logout-element></span>
   </div>
   <div class="content">
     <core-pages id="pageSelector" selected="{{page}}" valueattr="page-name">
-    <section page-name="empty"><!-- this section is so we have a blank canvas initially. -->
-		<div>
-			<p class="bubble"></p>
-		</div>
-    </section>
     <section page-name="login">
 		<div>
 			<p class="bubble">
 				<b>Login to see your greeting</b><br>
-				<login-element id="loginElement" loginCallback="{{checkUserEndpoint}}"></login-element>
+				<login-element id="loginElement" csrfHeader="{{csrfHeader}}"></login-element>
 			</p>
 		</div>
     </section>
     <section page-name="main">
 		<div>
 			<p class="bubble">
-			   <home-element id="homeElement"></home-element><br>
-			   <logout-element id="logoutElement" logoutCallback="{{checkUserEndpoint}}"></logout-element>
+			   <display-element id="displayElement"></display-element><br>
 			</p>
 		</div>
     </section>
@@ -62,7 +55,8 @@
 </core-scaffold>
 </template>
 
-<!-- Now that everything has been processed, lets run some JavaScript. -->
+<!-- Now that all the html has been processed, lets run some JavaScript
+     to finish setting everything up in the template (eg: add event handlers). -->
 <script src="js/app.js"></script>
 
 </body>

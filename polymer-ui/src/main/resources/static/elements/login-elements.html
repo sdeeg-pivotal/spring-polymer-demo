@@ -1,0 +1,78 @@
+<link rel="import" href="../js/bower_components/polymer/polymer.html"></link>
+<link rel="import" href="../js/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../js/bower_components/core-icons/core-icons.html">
+<link rel="import" href="../js/bower_components/paper-elements/paper-elements.html">
+
+<polymer-element name="login-element" attributes="csrfHeader">
+<template>
+<core-ajax id="loginEndpoint" 
+           url="/login"
+           headers="{{csrfHeader}}"
+	       handleAs="json" 
+	       method="POST" 
+	       on-core-response="{{loginResponse}}"
+	       on-core-error="{{loginError}}"></core-ajax>
+<paper-toast id="errorToast" text="Service Error!"></paper-toast>
+<div>
+  <table>
+  <tr>
+  <td>User Name:</td><td><paper-input value="{{credentials.username}}"></paper-input></td>
+  </tr>
+  <tr>
+  <td>Password:</td><td><paper-input value="{{credentials.password}}"></paper-input></td>
+  </tr>
+  <tr><td>&nbsp;</td><td><paper-button raised on-click='{{login}}'>Login</paper-button></td></tr>
+  </table>
+</div>
+</template>
+<script>
+    Polymer({
+      //Use created function to initialize complex properties
+      created: function() {
+          this.credentials = {
+          	username: "user",
+          	password: "password"
+          };
+      },
+      login: function() {
+      	  this.$.loginEndpoint.params = JSON.stringify(this.credentials);
+     	  this.$.loginEndpoint.go();
+      },
+      loginResponse: function() {
+    	  this.fire('login');
+      },
+      loginError: function() {
+    	  this.$.errorToast.text="Login Service Error";
+    	  this.$.errorToast.show();
+      }
+  });
+</script>
+</polymer-element>
+
+<polymer-element name="logout-element" attributes="csrfHeader">
+<template>
+<core-ajax id="logoutEndpoint" 
+           url="/logout"
+           headers="{{csrfHeader}}"
+	       handleAs="json" 
+	       method="POST" 
+	       on-core-response="{{logoutResponse}}"
+	       on-core-error="{{logoutError}}"></core-ajax>
+<paper-toast id="errorToast" text="Service Error!"></paper-toast>
+    <core-icon-button icon="arrow-forward" id="logoutButton" on-click="{{logout}}">logout</core-icon-button>
+</template>
+<script>
+    Polymer({
+        logout: function() {
+     	    this.$.logoutEndpoint.go();
+        },
+        logoutResponse: function() {
+        	this.fire("logout");
+        },
+        logoutError: function() {
+    	    this.$.errorToast.text="Logout Service Error";
+    	    this.$.errorToast.show();
+        }
+  });
+</script>
+</polymer-element>

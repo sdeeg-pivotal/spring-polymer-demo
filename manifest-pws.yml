@@ -1,0 +1,10 @@
+---
+applications:
+- name: polymer-demo-resource
+  memory: 512M
+  host: polymer-demo-resource
+  domain: cfapps.io
+  env:
+    spring.profiles.active: session
+  services: {
+    }
