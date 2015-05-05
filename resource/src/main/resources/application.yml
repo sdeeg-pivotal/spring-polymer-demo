@@ -1,12 +1,21 @@
 #debug:
+
 spring:
   profiles:
     active: session
+
 server:
   port: 9000
   contextPath: /api
+
 security:
   sessions: NEVER
+
 logging:
   level:
     org: WARN
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761

@@ -33,11 +33,29 @@ public class PolymerDemoSpringSessionConfig {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-		http.formLogin().and().logout().and().authorizeRequests()
-					.antMatchers("/", "/index.html", "/bower_components/**", "/elements/*", "/login", "/logout", "/uaa/token").permitAll().anyRequest()
-					.authenticated().and().csrf()
-					.csrfTokenRepository(csrfTokenRepository()).and()
-					.addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+			
+			String authorizedPaths[] = {"/", "/index.html", "/bower_components/**", "/elements/*", "/uaa/token"};
+	        http
+		        .authorizeRequests()
+		            .antMatchers(authorizedPaths).permitAll() 
+		            .anyRequest().authenticated()
+		            .and()
+		        .formLogin()
+		            .loginPage("/login")
+		            .permitAll()
+		            .and()
+		        .logout()                                    
+		            .permitAll()
+		            .and()
+		        .csrf()
+		            .disable();
+
+//			http.formLogin().and().logout().and().authorizeRequests()
+//					.antMatchers("/", "/index.html", "/bower_components/**", "/elements/*", "/login", "/logout", "/uaa/token").permitAll().anyRequest()
+//					.authenticated().and().csrf()
+//					.csrfTokenRepository(csrfTokenRepository()).and()
+//					.addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+
 		}
 		
 		private Filter csrfHeaderFilter() {
