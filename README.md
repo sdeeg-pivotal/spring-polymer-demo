@@ -1,5 +1,5 @@
 ##Update
-Google has released Polymer 0.8 (Alpha), which is significantly different than the 0.5x (Dev Preview) release that this project is based on.  Unfortunately, as of this writing (early May), the core and paper elements have not been fully ported, and the chatter is that the team is waiting for a stable version of 0.8 before releasing anything.  I've begun updating the general structure, but am going to wait for a full refactor until at least the core elements are ready.
+Google has released Polymer 0.9 (Beta), which is significantly different than the 0.5x (Dev Preview) release that this project is based on.  Unfortunately, as of this writing (mid May), the iron (formerly core) and paper elements have not been fully ported.  I've begun updating the general structure of the app, but am going to wait until at least the iron elements are ready.
 
 ##Introduction
 
