@@ -1,5 +1,5 @@
 ##Update
-Google has released Polymer 0.9 (Beta), which is significantly different than the 0.5x (Dev Preview) release that this project is based on.  Unfortunately, as of this writing (mid May), the iron (formerly core) and paper elements have not been fully ported.  I've begun updating the general structure of the app, but am going to wait until at least the iron elements are ready.
+Google has released Polymer 1.0!  It is significantly different than the 0.5x (Dev Preview) release that this project is based on.  I've begun updating the app, but time constraints have kept me from fully porting it with all the updated Spring Security goodness that has also happened.  I do have a simpler project using Polymer 1.0 and Spring here: [spring-polymer1-sample](https://github.com/sdeeg-pivotal/spring-polymer1-sample)
 
 ##Introduction
 
